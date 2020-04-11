@@ -50,6 +50,10 @@ void setup() {
   Serial.println("***If you do not want to do this, type an 'n' or unplug now.***");
 
  // simple dirty hack to write 4 bytes at a time (uncomment one at a time, and fill in mising slots "...." 26 - 49 and 104 - 123)
+ // slot [16 - 19]
+//   uint8_t data1[] = {0xB0, 0x00, 0x55, 0x00}; // 0x3300 sets the keyconfig.keyType, see datasheet pg 20
+//   atecc.write(0x00, (16 / 4), data1, 4);
+
   // slot [20 - 51]
   // uint8_t data1[] = {0x84, 0x67, 0x84, 0x67}; // 0x3300 sets the keyconfig.keyType, see datasheet pg 20
   // atecc.write(0x00, (20 / 4), data1, 4);
