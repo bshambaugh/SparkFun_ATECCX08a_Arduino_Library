@@ -117,7 +117,6 @@ class ATECCX08A {
 	boolean configLockStatus; // pulled from configZone[87], then set according to status (0x55=UNlocked, 0x00=Locked)
 	boolean dataOTPLockStatus; // pulled from configZone[86], then set according to status (0x55=UNlocked, 0x00=Locked)
 	boolean slot0LockStatus; // pulled from configZone[88], then set according to slot (bit 0) status
-        boolean slotNLockStatus;
 
 	byte publicKey64Bytes[64]; // used to store the public key returned when you (1) create a keypair, or (2) read a public key
 	uint8_t signature[64];
@@ -135,7 +134,6 @@ class ATECCX08A {
 	boolean lockConfig(); // note, this PERMINANTLY disables changes to config zone - including changing the I2C address!
 	boolean lockDataAndOTP();
 	boolean lockDataSlot0();
-	boolean lockDataSlotN(uint16_t slot);
 	boolean lock(uint8_t zone);
 	
 	// Random array and fuctions
