@@ -32,8 +32,9 @@
 
 #include "Wire.h"
 
-#define ATECC508A_ADDRESS_DEFAULT 0x60 //7-bit unshifted default I2C Address
+#define ATECC508A_ADDRESS_DEFAULT 0x58 //7-bit unshifted default I2C Address
 // 0x60 on a fresh chip. note, this is software definable
+// maybe it is also 0x58
 
 // WORD ADDRESS VALUES
 // These are sent in any write sequence to the IC.
@@ -63,6 +64,21 @@
 #define LOCK_MODE_ZONE_CONFIG 			0b10000000
 #define LOCK_MODE_ZONE_DATA_AND_OTP 	0b10000001
 #define LOCK_MODE_SLOT0					0b10000010
+#define LOCKMODE_SLOT1      0b10000110
+#define LOCKMODE_SLOT2      0b10001010
+#define LOCKMODE_SLOT3      0b10001110
+#define LOCKMODE_SLOT4      0b10010010
+#define LOCKMODE_SLOT5      0b10010110
+#define LOCKMODE_SLOT6      0b10011010
+#define LOCKMODE_SLOT7      0b10011110
+#define LOCKMODE_SLOT8      0b10100010
+#define LOCKMODE_SLOT9      0b10100110
+#define LOCKMODE_SLOT10     0b10101010
+#define LOCKMODE_SLOT11     0b10101110
+#define LOCKMODE_SLOT12     0b10110010
+#define LOCKMODE_SLOT13     0b10110110
+#define LOCKMODE_SLOT14     0b10111010
+#define LOCKMODE_SLOT15     0b10111110
 
 // GenKey command PARAM1 zone options (aka Mode). more info at table on datasheet page 71
 #define GENKEY_MODE_PUBLIC 			0b00000000
@@ -91,7 +107,7 @@ class ATECCX08A {
 	#if defined(ARDUINO_ARCH_APOLLO3) // checking which board we are using and selecting a Serial debug that will work.
 	boolean begin(uint8_t i2caddr = ATECC508A_ADDRESS_DEFAULT, TwoWire &wirePort = Wire, Stream &serialPort = Serial); // Artemis
 	#else
-	boolean begin(uint8_t i2caddr = ATECC508A_ADDRESS_DEFAULT, TwoWire &wirePort = Wire, Stream &serialPort = SerialUSB);  // SamD21 boards
+	boolean begin(uint8_t i2caddr = ATECC508A_ADDRESS_DEFAULT, TwoWire &wirePort = Wire, Stream &serialPort = Serial);  // SamD21 boards
 	#endif
 	
 	byte inputBuffer[128]; // used to store messages received from the IC as they come in
@@ -101,7 +117,8 @@ class ATECCX08A {
 	boolean configLockStatus; // pulled from configZone[87], then set according to status (0x55=UNlocked, 0x00=Locked)
 	boolean dataOTPLockStatus; // pulled from configZone[86], then set according to status (0x55=UNlocked, 0x00=Locked)
 	boolean slot0LockStatus; // pulled from configZone[88], then set according to slot (bit 0) status
-	
+        boolean slotNLockStatus;
+
 	byte publicKey64Bytes[64]; // used to store the public key returned when you (1) create a keypair, or (2) read a public key
 	uint8_t signature[64];
 	
@@ -118,6 +135,7 @@ class ATECCX08A {
 	boolean lockConfig(); // note, this PERMINANTLY disables changes to config zone - including changing the I2C address!
 	boolean lockDataAndOTP();
 	boolean lockDataSlot0();
+	boolean lockDataSlotN(uint16_t slot);
 	boolean lock(uint8_t zone);
 	
 	// Random array and fuctions

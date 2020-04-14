@@ -232,6 +232,57 @@ boolean ATECCX08A::lockDataSlot0()
   return lock(LOCK_MODE_SLOT0);
 }
 
+
+/** \brief
+
+        lockDataSlotN(uint16_t slot)
+
+        This function sends the LOCK Command using the argument slot as parameter 1,
+        and listens for success response (0x00).
+*/
+
+
+boolean ATECCX08A::lockDataSlotN(uint16_t slot)
+{
+    uint8_t mode;
+    switch (slot)
+    {
+       case 15: mode = LOCKMODE_SLOT15;
+                break;
+       case 14: mode = LOCKMODE_SLOT14;
+                break;
+       case 13: mode = LOCKMODE_SLOT13;
+		break;
+       case 12: mode = LOCKMODE_SLOT12;
+		break;
+       case 11: mode = LOCKMODE_SLOT11;
+		break;
+       case 10: mode = LOCKMODE_SLOT10;
+		break;
+       case 9: mode = LOCKMODE_SLOT9;
+	       break;
+       case 8: mode = LOCKMODE_SLOT8;
+	       break;
+       case 7: mode = LOCKMODE_SLOT7;
+	       break;
+       case 6: mode = LOCKMODE_SLOT6;
+               break;
+       case 5: mode = LOCKMODE_SLOT5;
+	       break;
+       case 4: mode = LOCKMODE_SLOT4;
+	       break;
+       case 3: mode = LOCKMODE_SLOT3;
+	       break;
+       case 2: mode = LOCKMODE_SLOT2;
+	       break;
+       case 1: mode = LOCKMODE_SLOT1;
+	       break;
+       default: mode = LOCK_MODE_SLOT0;
+ 		break;
+    }
+
+    return lock(mode);
+}
 /** \brief
 
 	lock(byte zone)
