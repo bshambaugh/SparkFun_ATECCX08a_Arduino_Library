@@ -21,7 +21,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SparkFun_ATECCX08a_Arduino_Library.h"
+#include "SparkFun_ATECCX08a_Arduino_Library-test.h"
 
 /** \brief 
 
@@ -797,42 +797,6 @@ boolean ATECCX08A::loadTempKey(uint8_t *data)
 
 /** \brief
 
-	loadTempKeyDebug(uint8_t *data)
-
-	Writes 32 bytes of data to memory location "TempKey" on the IC.
-	Note, the data is provided externally by you, the user, and is included in the
-	command NONCE.
-
-    We will use the NONCE command in passthrough mode to load tempKey with our data (aka message).
-    Note, the datasheet warns that this does not provide protection agains replay attacks,
-    but we will protect again this because our server (Bob) is going to send us it's own unique random TOKEN,
-    when it requests data, and this will allow us to create a unique data + signature for every communication.
-*/
-
-boolean ATECCX08A::loadTempKeyDebug(uint8_t *data)
-{
-  sendCommand(COMMAND_OPCODE_NONCE, NONCE_MODE_PASSTHROUGH, 0x0000, data, 32);
-  
-  // note, param2 is 0x0000 (and param1 is PASSTHROUGH), so OutData will be just a single byte of zero upon completion.
-  // see ds pg 77 for more info
-
-  delay(7); // time for IC to process command and exectute
-
-  // Now let's read back from the IC.
-  
-  if(receiveResponseData(4) == false) return false; // responds with "0x00" if NONCE executed properly
-  idleMode();
-  boolean checkCountResult = checkCount();
-  boolean checkCrcResult = checkCrc();
-  
-  if( (checkCountResult == false) || (checkCrcResult == false) ) return false;
-  
-  if(inputBuffer[1] == 0x00) return true;   // If we hear a "0x00", that means it had a successful nonce
-  else return false;
-}
-
-/** \brief
-
 	signTempKey(uint16_t slot)
 
 	Create a 64 byte ECC signature for the contents of TempKey using the private key in Slot.
@@ -918,6 +882,42 @@ boolean ATECCX08A::verifySignature(uint8_t *message, uint8_t *signature, uint8_t
   if( (checkCountResult == false) || (checkCrcResult == false) ) return false;
   
   if(inputBuffer[1] == 0x00) return true;   // If we hear a "0x00", that means it had a successful verify
+  else return false;
+}
+
+/** \brief
+
+	loadTempKeyDebug(uint8_t *data)
+
+	Writes 32 bytes of data to memory location "TempKey" on the IC.
+	Note, the data is provided externally by you, the user, and is included in the
+	command NONCE.
+
+    We will use the NONCE command in passthrough mode to load tempKey with our data (aka message).
+    Note, the datasheet warns that this does not provide protection agains replay attacks,
+    but we will protect again this because our server (Bob) is going to send us it's own unique random TOKEN,
+    when it requests data, and this will allow us to create a unique data + signature for every communication.
+*/
+
+boolean ATECCX08A::loadTempKeyDebug(uint8_t *data)
+{
+  sendCommand(COMMAND_OPCODE_NONCE, NONCE_MODE_PASSTHROUGH, 0x0000, data, 32);
+  
+  // note, param2 is 0x0000 (and param1 is PASSTHROUGH), so OutData will be just a single byte of zero upon completion.
+  // see ds pg 77 for more info
+
+  delay(7); // time for IC to process command and exectute
+
+  // Now let's read back from the IC.
+  
+  if(receiveResponseData(4,true) == false) return false; // responds with "0x00" if NONCE executed properly
+  idleMode();
+  boolean checkCountResult = checkCount(true);
+  boolean checkCrcResult = checkCrc(true);
+  
+  if( (checkCountResult == false) || (checkCrcResult == false) ) return false;
+  
+  if(inputBuffer[1] == 0x00) return true;   // If we hear a "0x00", that means it had a successful nonce
   else return false;
 }
 
