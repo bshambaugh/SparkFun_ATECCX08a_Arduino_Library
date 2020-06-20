@@ -157,6 +157,9 @@ class ATECCX08A {
 	boolean signTempKey(uint16_t slot = 0x0000); // create signature using contents of TempKey and PRIVATE KEY in slot
 	boolean verifySignature(uint8_t *message, uint8_t *signature, uint8_t *publicKey); // external ECC publicKey only
 
+	// brent 6-20-2020 debug
+	boolean loadTempKeyDebug(uint8_t *data); 
+
 	boolean read(uint8_t zone, uint16_t address, uint8_t length, boolean debug = false);
 	boolean write(uint8_t zone, uint16_t address, uint8_t *data, uint8_t length_of_data);
 
