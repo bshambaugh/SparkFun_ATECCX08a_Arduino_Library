@@ -969,6 +969,27 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
   else return false;
 }
 
+** \brief
+
+	createSignature(uint8_t *data, uint16_t slot)
+
+    Creates a 64-byte ECC signature on 32 bytes of data.
+	Defautes to use private key located in slot 0.
+	Your signature will be available at global variable signature[].
+	
+	Note, the IC actually needs you to store your data in a temporary memory location
+	called TempKey. This function first loads TempKey, and then signs TempKey. Then it 
+	receives the signature and copies it to signature[].
+*/
+
+boolean ATECCX08A::createSignatureDebug(uint8_t *data, uint16_t slot)
+{
+  boolean loadTempKeyResult = loadTempKeyDebug(data);
+  boolean signTempKeyResult = signTempKeyDebug(slot);
+  if(loadTempKeyResult && signTempKeyResult) return true;
+  else return false;
+}
+
 /** \brief
 
 	getInfo()
