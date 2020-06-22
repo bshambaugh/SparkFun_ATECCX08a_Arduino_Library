@@ -980,9 +980,9 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
 	silicon revision.
 */
 
-boolean ATECCX08A::getKeyInfo()
+boolean ATECCX08A::getKeyInfo(uint16_t slot)
 {
-  sendCommand(COMMAND_OPCODE_INFO, 0x01, 0x0000); // param1 - 0x00 (revision mode).
+  sendCommand(COMMAND_OPCODE_INFO, 0x01, slot); // param1 - 0x00 (revision mode).
 
   delay(1); // time for IC to process command and exectute
   

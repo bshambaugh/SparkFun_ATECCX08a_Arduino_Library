@@ -162,7 +162,7 @@ class ATECCX08A {
         // brent 6-22-2020 debug
         boolean signTempKeyDebug(uint16_t slot = 0x0000); 
         // brent 6-22-2020 get KeyInfo
-        boolean getKeyInfo(); 
+        boolean getKeyInfo(uint16_t slot = 0x0000); 
 
 	boolean read(uint8_t zone, uint16_t address, uint8_t length, boolean debug = false);
 	boolean write(uint8_t zone, uint16_t address, uint8_t *data, uint8_t length_of_data);
