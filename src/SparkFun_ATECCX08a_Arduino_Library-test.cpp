@@ -935,7 +935,7 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
 {
   sendCommand(COMMAND_OPCODE_SIGN, SIGN_MODE_TEMPKEY, slot);
 
-  delay(60); // time for IC to process command and exectute
+  delay(160); // time for IC to process command and exectute
 
   // Now let's read back from the IC.
   
