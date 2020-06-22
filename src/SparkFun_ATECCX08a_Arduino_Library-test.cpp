@@ -923,6 +923,54 @@ boolean ATECCX08A::loadTempKeyDebug(uint8_t *data)
 
 /** \brief
 
+	signTempKeyDebug(uint16_t slot)
+
+	Create a 64 byte ECC signature for the contents of TempKey using the private key in Slot.
+	Default slot is 0.
+	
+	The response from this command (the signature) is stored in global varaible signature[].
+*/
+
+boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
+{
+  sendCommand(COMMAND_OPCODE_SIGN, SIGN_MODE_TEMPKEY, slot);
+
+  delay(60); // time for IC to process command and exectute
+
+  // Now let's read back from the IC.
+  
+  if(receiveResponseData(64 + 2 + 1,true) == false) return false; // signature (64), plus crc (2), plus count (1)
+  idleMode();
+  boolean checkCountResult = checkCount(true);
+  boolean checkCrcResult = checkCrc(true);
+  
+  // update signature[] array and print it to serial terminal nicely formatted for easy copy/pasting between sketches
+  if(checkCountResult && checkCrcResult) // check that it was a good message
+  {  
+    // we don't need the count value (which is currently the first byte of the inputBuffer)
+    for (int i = 0 ; i < 64 ; i++) // for loop through to grab all but the first position (which is "count" of the message)
+    {
+      signature[i] = inputBuffer[i + 1];
+    }
+  
+	_debugSerial->println();
+    _debugSerial->println("uint8_t signature[64] = {");
+    for (int i = 0; i < sizeof(signature) ; i++)
+    {
+	  _debugSerial->print("0x");
+	  if((signature[i] >> 4) == 0) _debugSerial->print("0"); // print preceeding high nibble if it's zero
+      _debugSerial->print(signature[i], HEX);
+      if(i != 63) _debugSerial->print(", ");
+	  if((63-i) % 16 == 0) _debugSerial->println();
+    }
+	_debugSerial->println("};");
+	return true;
+  }
+  else return false;
+}
+
+/** \brief
+
 	writeConfigSparkFun()
 	
 	Writes the necessary configuration settings to the IC in order to work with the SparkFun Arduino Library examples.
