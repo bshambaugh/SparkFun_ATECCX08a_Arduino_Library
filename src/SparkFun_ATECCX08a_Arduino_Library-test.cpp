@@ -969,7 +969,7 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
   else return false;
 }
 
-** \brief
+/** \brief
 
 	createSignature(uint8_t *data, uint16_t slot)
 
