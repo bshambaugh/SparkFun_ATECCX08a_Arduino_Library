@@ -988,7 +988,7 @@ boolean ATECCX08A::getKeyInfo()
   
     // Now let's read back from the IC and see if it reports back good things.
   countGlobal = 0; 
-  if(receiveResponseData(6, true) == false) return false;
+  if(receiveResponseData(7, true) == false) return false;
   idleMode();
   checkCount(true);
   checkCrc(true);
