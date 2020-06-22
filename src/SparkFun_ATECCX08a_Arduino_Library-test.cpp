@@ -971,6 +971,34 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
 
 /** \brief
 
+	getInfo()
+	
+	This function sends the INFO Command and listens for the correct version (0x50) within the response.
+	The Info command has a mode parameter, and in this function we are using the "Revision" mode (0x00)
+	At the time of data sheet creation the Info command will return 0x00 0x00 0x50 0x00. For
+	all versions of the ECC508A the 3rd byte will always be 0x50. The fourth byte will indicate the
+	silicon revision.
+*/
+
+boolean ATECCX08A::getKeyInfo()
+{
+  sendCommand(COMMAND_OPCODE_INFO, 0x01, 0x0000); // param1 - 0x00 (revision mode).
+
+  delay(1); // time for IC to process command and exectute
+  
+    // Now let's read back from the IC and see if it reports back good things.
+  countGlobal = 0; 
+  if(receiveResponseData(7, true) == false) return false;
+  idleMode();
+  if(checkCount() == false) return false;
+  if(checkCrc() == false) return false;
+  if(inputBuffer[0] != 0x00) return true;   
+  else return false;
+}
+
+
+/** \brief
+
 	writeConfigSparkFun()
 	
 	Writes the necessary configuration settings to the IC in order to work with the SparkFun Arduino Library examples.
