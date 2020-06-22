@@ -990,6 +990,8 @@ boolean ATECCX08A::getKeyInfo()
   countGlobal = 0; 
   if(receiveResponseData(6, true) == false) return false;
   idleMode();
+  checkCount(true);
+  checkCrc(true);
   if(checkCount() == false) return false;
   if(checkCrc() == false) return false;
   if(inputBuffer[0] != 0x00) return true;   
