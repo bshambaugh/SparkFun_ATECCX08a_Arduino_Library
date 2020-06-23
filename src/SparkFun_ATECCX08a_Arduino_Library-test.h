@@ -165,6 +165,8 @@ class ATECCX08A {
         boolean getKeyInfo(uint16_t slot = 0x0000); 
         // debugging createSignature / 6-22-2020
         boolean createSignatureDebug(uint8_t *data, uint16_t slot = 0x0000); 
+        // debugging dynamic info / 6-23-2020
+	boolean getStateInfo();
 
 	boolean read(uint8_t zone, uint16_t address, uint8_t length, boolean debug = false);
 	boolean write(uint8_t zone, uint16_t address, uint8_t *data, uint8_t length_of_data);
