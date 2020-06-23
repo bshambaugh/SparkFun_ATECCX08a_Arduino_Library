@@ -939,7 +939,7 @@ boolean ATECCX08A::signTempKeyDebug(uint16_t slot)
 
   // Now let's read back from the IC.
   
-  if(receiveResponseData(64 + 2 + 1,true) == false) return false; // signature (64), plus crc (2), plus count (1)
+  if(receiveResponseData(64 + 2 + 1) == false) return false; // signature (64), plus crc (2), plus count (1)
   idleMode();
   boolean checkCountResult = checkCount(true);
   boolean checkCrcResult = checkCrc(true);
