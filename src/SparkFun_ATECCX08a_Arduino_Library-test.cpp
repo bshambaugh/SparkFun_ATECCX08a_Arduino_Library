@@ -989,8 +989,8 @@ boolean ATECCX08A::createSignatureDebug(uint8_t *data, uint16_t slot)
   _debugSerial->println(loadTempKeyResult);
   _debugSerial->println(" ");
   boolean signTempKeyResult = signTempKeyDebug(slot);
-  _debugSerial->println("the loadtempKeyDebug slot is");
-  _debugSerial->println(slot);
+  _debugSerial->println("the signTempKeyResult slot is");
+  _debugSerial->println(signTempKeyResult);
   _debugSerial->println(" ");
   if(loadTempKeyResult && signTempKeyResult) return true;
   else return false;
