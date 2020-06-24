@@ -32,7 +32,7 @@
 
 #include "Wire.h"
 
-#define ATECC508A_ADDRESS_DEFAULT 0x58 //7-bit unshifted default I2C Address
+#define ATECC508A_ADDRESS_DEFAULT 0x60 //7-bit unshifted default I2C Address
 // 0x60 on a fresh chip. note, this is software definable
 // maybe it is also 0x58
 
