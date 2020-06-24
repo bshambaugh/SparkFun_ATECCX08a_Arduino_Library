@@ -1,3 +1,7 @@
+#include <SparkFun_ATECCX08a_Arduino_Library-itwocdefault.h>
+
+
+
 
 /*
   Using the SparkFun Cryptographic Co-processor Breakout ATECC508a (Qwiic)
@@ -25,7 +29,8 @@
 
 /* Brent Shambaugh: I modified this code to print the info, write the config, and print the info again */
 
-#include <SparkFun_ATECCX08a_Arduino_Library.h> //Click here to get the library: http://librarymanager/All#SparkFun_ATECCX08a
+// #include <SparkFun_ATECCX08a_Arduino_Library.h> //Click here to get the library: http://librarymanager/All#SparkFun_ATECCX08a
+
 #include <Wire.h>
 
 ATECCX08A atecc;
@@ -142,8 +147,8 @@ void setup() {
   //   atecc.write(0x00, (124 / 4), data1, 4);
 
      // slot [16 - 19]
-     uint8_t data1[] = {0xC0, 0x00, 0x55, 0x00};
-     atecc.write(0x00, (16 / 4), data1, 4);
+ //    uint8_t data1[] = {0xC0, 0x00, 0x55, 0x00};
+ //    atecc.write(0x00, (16 / 4), data1, 4);
     
 
   printInfo(); // Print info again to see lock statuses. And if all is good, print the generated public key!
