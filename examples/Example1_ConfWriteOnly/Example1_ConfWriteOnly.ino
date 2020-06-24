@@ -74,6 +74,78 @@ void setup() {
   // uint8_t data1[] = {0x53, 0x00, 0x3C, 0x00}; // 0x3300 sets the keyconfig.keyType, see datasheet pg 20
   // atecc.write(0x00, (124 / 4), data1, 4);
 
+ // uint8_t data2[] = {0x83,0x20,0x87,0x20,0x8F,0x20,0xC4,0x8F,0x8F,0x8F,0x8F,0x8F,0x9F,0x8F,0xAF,0x8F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xAF,0x8F};
+ // atecc.write(0x00,(20 / 33),data2,32);
+
+  // slot [20 - 23]
+ //   uint8_t data1[] = {0x83,0x20,0x87,0x20};
+  //  atecc.write(0x00, (20 / 4), data1, 4);
+
+    // slot [24 - 27]
+  //  uint8_t data1[] = {0x8F,0x20,0xC4,0x8F};
+  //  atecc.write(0x00, (24 / 4), data1, 4);
+
+    // slot [28 - 31] 
+  //  uint8_t data1[] = {0x8F,0x8F,0x8F,0x8F};
+  //  atecc.write(0x00, (28 / 4), data1, 4);
+
+    // slot [32 - 35] 
+  //  uint8_t data1[] = {0x9F,0x8F,0xAF,0x8F};
+  //  atecc.write(0x00, (32 / 4), data1, 4);
+
+   // slot [36 - 39]
+ //   uint8_t data1[] = {0x00,0x00,0x00,0x00};
+ //   atecc.write(0x00, (36 / 4), data1, 4);
+
+   // slot [40 - 43]
+ //  uint8_t data1[] = {0x00,0x00,0x00,0x00};
+ //  atecc.write(0x00, (40 / 4), data1, 4);
+
+   // slot [44 - 47]
+ //  uint8_t data1[] = {0x00,0x00,0x00,0x00};
+ //  atecc.write(0x00, (44 / 4), data1, 4);
+
+   // slot [48 - 51]
+  // uint8_t data1[] = {0x00,0x00,0xAF,0x8F};
+  // atecc.write(0x00, (48 / 4), data1, 4);
+
+   // slot [96 - 99]
+ //  uint8_t data1[] = {0x33,0x00,0x33,0x00};
+ //  atecc.write(0x00, (96 / 4), data1, 4);
+
+   // slot [100 - 103]
+  // uint8_t data1[] = {0x33,0x00,0x1C,0x00};
+ //  atecc.write(0x00, (100 / 4), data1, 4);
+
+   // slot [104 - 107]
+  // uint8_t data1[] = {0x1C,0x00,0x1C,0x00};
+  // atecc.write(0x00, (104 / 4), data1, 4);
+
+   // slot [108 - 111]
+  //  uint8_t data1[] = {0x1C,0x00,0x1C,0x00};
+  //  atecc.write(0x00, (108 / 4), data1, 4);
+
+    // slot [112 - 115]
+   // uint8_t data1[] = {0x3C,0x00,0x3C,0x00};
+   // atecc.write(0x00, (112 / 4), data1, 4);
+
+    // slot [116 - 119]
+ //   uint8_t data1[] = {0x3C,0x00,0x3C,0x00};
+  //  atecc.write(0x00, (116 / 4), data1, 4);
+
+    // slot [120 - 123]
+   // uint8_t data1[] = {0x3C,0x00,0x3C,0x00};
+   // atecc.write(0x00, (120 / 4), data1, 4);
+
+    // slot [124 - 127]
+  //  uint8_t data1[] = {0x3C,0x00,0x1C,0x00};
+  //   atecc.write(0x00, (124 / 4), data1, 4);
+
+     // slot [16 - 19]
+     uint8_t data1[] = {0xC0, 0x00, 0x55, 0x00};
+     atecc.write(0x00, (16 / 4), data1, 4);
+    
+
   printInfo(); // Print info again to see lock statuses. And if all is good, print the generated public key!
 }
 
